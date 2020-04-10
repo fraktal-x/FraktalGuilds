@@ -1,6 +1,6 @@
 name: FraktalGuilds
 description: FraktalGuilds - the custom team plugin!
-version: 1.0
+version: 1.1
 author: fraktalx
 api-version: 1.15
 
@@ -11,8 +11,3 @@ commands:
   guild:
     usage: /<command>
     description: The guild command
-permissions:
-  guild.wipe.use:
-    default: op
-  guild.delete.use:
-    default: op
