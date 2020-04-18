@@ -187,6 +187,10 @@ public class Utils {
 		}		
 	}
 	
+	
+	
+
+	
 	public int isInt(String s) {
 		try {
 			int a = Integer.parseInt(s.trim());
@@ -196,8 +200,7 @@ public class Utils {
 			return -1;
 		}		
 	}
-	
-	
+		
 	
 	public void errorMessage(CommandSender sender, GuildError e) {
 		String output = "";

@@ -1,13 +1,18 @@
 package fraktalx.FraktalGuilds;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -20,7 +25,7 @@ import net.md_5.bungee.api.ChatColor;
 public class Main extends JavaPlugin implements Listener {
 	
 	
-	public static String VERSION = "v1.1";
+	public static String VERSION = "v1.3";
 	public static boolean inDebugMode = false;
 
 	public Map<String, Long> cooldowns = new HashMap<String, Long>();
@@ -28,6 +33,8 @@ public class Main extends JavaPlugin implements Listener {
 	public List<String> guildNames = new ArrayList<>();
 	
 	public Utils utils = new Utils(this);
+	
+	public ItemStack[] cl = new ItemStack[2];
 	
 	
 	@Override
@@ -48,9 +55,43 @@ public class Main extends JavaPlugin implements Listener {
 		Bukkit.getLogger().info("FraktalGuilds " + VERSION + " deactivated!");
 	}
 	
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void onInventoryClickEvent(InventoryClickEvent c) {
+		if(c.getClickedInventory() == null) return;
+		if(c.getClickedInventory().getType() != InventoryType.PLAYER) return;
+			final ItemStack cursor = c.getCursor();	//will be banner
+			ItemStack target = c.getCurrentItem();	//will be head
+			if(c.getRawSlot() != 5) return;
+			if(cursor == null) return;
+			if(!cursor.getType().toString().endsWith("BANNER")) return;
+			if(c.getClick().isLeftClick()) {
+				if(cursor.getAmount() != 1) return;
+			}
+			if(c.getClick().isRightClick()) {
+				if(target.getType() != Material.AIR) return;
+				target = cursor.clone();
+				target.setAmount(cursor.getAmount() - 1);
+				cursor.setAmount(1);
+			}
+			
+			final ItemStack newTarget = target;
+			
+			
+			Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+				@SuppressWarnings("deprecation")
+				@Override
+				public void run() {
+					c.setCursor(newTarget);
+			        c.setCurrentItem(cursor);            		 
+				}
+			}, 1L);
+	}		
+	
+	
+	
 	
 	@EventHandler
-	public void onPlayerJoin(PlayerJoinEvent event) {
+	public void onPlayerJoin(PlayerJoinEvent c) {
 		writeData();
 	}
 	
@@ -70,7 +111,7 @@ public class Main extends JavaPlugin implements Listener {
 	
 	
 	@EventHandler
-	public void onPlayerExit(PlayerQuitEvent event) {
+	public void onPlayerExit(PlayerQuitEvent c) {
 		writeData();
 	}
 	
@@ -114,6 +155,5 @@ public class Main extends JavaPlugin implements Listener {
 		this.getConfig().set("cl", null);
 		this.saveConfig();
 	}
-	
 	
 }
