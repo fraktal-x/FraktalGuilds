@@ -1,12 +1,12 @@
-name: FraktalGuilds
-description: FraktalGuilds - the custom team plugin!
-version: 1.3
-author: fraktalx
+name: FSMP-Guilds
+description: The Guilds plugin for FSMP
+version: 2.0
+author: fraktalsk
 api-version: 1.15
 
-prefix: FraktalGuilds
+prefix: FSMP-Guilds
 
-main: fraktalx.FraktalGuilds.Main
+main: fraktalsk.FSMP.Guilds.Main
 commands:
   guild:
     usage: /<command>
