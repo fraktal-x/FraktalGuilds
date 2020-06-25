@@ -25,7 +25,7 @@ import net.md_5.bungee.api.ChatColor;
 public class Main extends JavaPlugin implements Listener {
 	
 	
-	public static String VERSION = "V2.0";
+	public static String VERSION = "V2.1";
 	public static boolean inDebugMode = false;
 
 	public Map<String, Long> cooldowns = new HashMap<String, Long>();

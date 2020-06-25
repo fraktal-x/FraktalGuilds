@@ -1,8 +1,8 @@
 name: FSMP-Guilds
 description: The Guilds plugin for FSMP
-version: 2.0
+version: 2.1
 author: fraktalsk
-api-version: 1.15
+api-version: 1.16
 
 prefix: FSMP-Guilds
 
